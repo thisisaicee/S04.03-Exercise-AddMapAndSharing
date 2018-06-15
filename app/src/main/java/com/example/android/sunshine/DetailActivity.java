@@ -2,7 +2,10 @@ package com.example.android.sunshine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
@@ -29,6 +32,21 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    // TODO (3) Create a menu with an item with id of action_share
-    // TODO (4) Display the menu and implement the forecast sharing functionality
+
+    // DONE (4) Display the menu and implement the forecast sharing functionality
+
+    private Intent weatherIntent() {
+        String mime = "text/plain";
+        String concatenatedText = mForecast + FORECAST_SHARE_HASHTAG;
+        Intent intent = ShareCompat.IntentBuilder.from(this).setType(mime).setText(concatenatedText).getIntent();
+        return intent;
+    }
+    // DONE (3) Create a menu with an item with id of action_share
+    @Override
+    public boolean onCreateOptionsMenu(Menu share) {
+        getMenuInflater().inflate(R.menu.share_details, share);
+        MenuItem shareMenuItem = share.findItem(R.id.action_share);
+        shareMenuItem.setIntent(weatherIntent());
+        return true;
+    }
 }

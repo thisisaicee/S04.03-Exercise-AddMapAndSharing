@@ -211,18 +211,32 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
         return true;
     }
 
+
+    public void openMap() {
+        String addressString = "geo:0,0?=5 Ilorin Street, Area 8, Garki, Abuja";
+        Uri parser = Uri.parse(addressString);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(parser);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_refresh) {
             mForecastAdapter.setWeatherData(null);
             loadWeatherData();
             return true;
         }
 
-        // TODO (2) Launch the map when the map menu item is clicked
-
-        return super.onOptionsItemSelected(item);
+        // DONE (2) Launch the map when the map menu item is clicked
+        if (id == R.id.action_map) {
+            openMap();
+            return true;
+        }
+        return this.onOptionsItemSelected(item);
     }
 }
